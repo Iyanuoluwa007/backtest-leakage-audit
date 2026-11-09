@@ -1,0 +1,12 @@
+Grid-search winners on 100 noise histories (true Sharpe = 0)
+
+Mean in-sample Sharpe:      0.98
+Mean out-of-sample Sharpe:  0.08
+Winners with PSR > 0.95:    42%  (fooled by luck)
+Winners with DSR > 0.95:    0%
+
+Control: one pre-registered idea on data with a real edge (N = 1, so DSR = PSR)
+
+seed  1: in-sample Sharpe 1.13, DSR 0.975, hidden-year Sharpe 1.14
+seed  2: in-sample Sharpe 1.58, DSR 0.997, hidden-year Sharpe 1.12
+seed 42: in-sample Sharpe 2.64, DSR 1.000, hidden-year Sharpe 2.09

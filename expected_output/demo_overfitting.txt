@@ -1,0 +1,28 @@
+Tested 466 SMA crossover pairs on 3 years of a driftless random walk
+
+ fast  slow  sharpe  daily_sharpe
+   26    60   0.842         0.053
+   32    70   0.670         0.042
+   38    70   0.666         0.042
+   28    50   0.662         0.042
+   28    60   0.660         0.042
+
+Winner 26/60: annualised Sharpe 0.84
+Luck hurdle for 466 trials:  1.32 (annualised)
+Probabilistic Sharpe ratio:     0.918
+Deflated Sharpe ratio:          0.215
+Sharpe in the hidden fourth year: -1.72
+
+Walk-forward on 10 years: optimise on 3 years, trade the next year unseen
+
+test_year_starts chosen  in_sample  out_of_sample
+      2017-11-24  26/60       0.84          -1.72
+      2018-11-13 50/120       0.48          -0.04
+      2019-10-31 50/110       0.67          -0.83
+      2020-10-19 48/190       0.50           1.44
+      2021-10-06 20/190       1.01           2.21
+      2022-09-23 46/120       2.11          -1.25
+      2023-09-12 12/160       1.61          -1.10
+
+Mean in-sample Sharpe:     1.03
+Mean out-of-sample Sharpe: -0.18

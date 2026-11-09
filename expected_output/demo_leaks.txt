@@ -1,0 +1,23 @@
+Annualised Sharpe on a driftless random walk (true Sharpe = 0)
+
+momentum_signal                 0.52
+centered_ma_signal              4.43
+full_sample_zscore_signal      -0.10
+confirmation_filter_signal     10.81
+
+The clean momentum signal through two engines
+
+positions (lagged)              0.52
+leaky_positions (no lag)        4.86
+
+Look-ahead test on each signal (decision_lag=0)
+
+[OK]   momentum_signal              0/50 values changed
+[FAIL] centered_ma_signal           18/50 values changed
+[FAIL] full_sample_zscore_signal    20/50 values changed
+[FAIL] confirmation_filter_signal   30/50 values changed
+
+Look-ahead test on the positions from each engine (decision_lag=1)
+
+[OK]   positions                    0/50 values changed
+[FAIL] leaky_positions              13/50 values changed

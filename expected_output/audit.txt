@@ -1,0 +1,24 @@
+Audit: confirmation_filter_signal  (annualised Sharpe 10.63)
+  [FAIL] signal uses no future data                     28/50 values changed
+  [FAIL] position is decided before the bar it trades   28/50 values changed
+  [OK]   edge survives multiple testing                 PSR (1 trial) = 1.000
+  Verdict: DO NOT TRUST THIS BACKTEST
+
+Audit: momentum_signal  (annualised Sharpe 4.73)
+  [OK]   signal uses no future data                     0/50 values changed
+  [FAIL] position is decided before the bar it trades   15/50 values changed
+  [OK]   edge survives multiple testing                 PSR (1 trial) = 1.000
+  Verdict: DO NOT TRUST THIS BACKTEST
+
+Audit: best_crossover  (annualised Sharpe 0.84)
+  [OK]   signal uses no future data                     0/50 values changed
+  [OK]   position is decided before the bar it trades   0/50 values changed
+  [FAIL] edge survives multiple testing                 DSR over 466 trials = 0.215
+  Verdict: DO NOT TRUST THIS BACKTEST
+
+Audit: one_day_momentum  (annualised Sharpe 1.58)
+  [OK]   signal uses no future data                     0/50 values changed
+  [OK]   position is decided before the bar it trades   0/50 values changed
+  [OK]   edge survives multiple testing                 PSR (1 trial) = 0.997
+  Verdict: PASS
+
