@@ -4,19 +4,19 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from audit import audit_backtest
-from data import make_prices, make_trending_prices
-from engine import strategy_returns
-from lookahead import lookahead_test, scramble_future
-from overfitting import (
+from backtest_leakage_audit.audit import audit_backtest
+from backtest_leakage_audit.data import make_prices, make_trending_prices
+from backtest_leakage_audit.engine import strategy_returns
+from backtest_leakage_audit.lookahead import lookahead_test, scramble_future
+from backtest_leakage_audit.overfitting import (
     daily_sharpe,
     deflated_sharpe_ratio,
     parameter_grid,
     probabilistic_sharpe_ratio,
     sma_crossover_signal,
 )
-from signals import centered_ma_signal, momentum_signal
-from snooping import data_snooping_test, trial_return_matrix
+from backtest_leakage_audit.signals import centered_ma_signal, momentum_signal
+from backtest_leakage_audit.snooping import data_snooping_test, trial_return_matrix
 
 SMALL_GRID = parameter_grid()[::5]
 

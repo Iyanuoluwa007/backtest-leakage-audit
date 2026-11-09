@@ -1,5 +1,0 @@
-numpy>=1.26
-pandas>=2.1
-scipy>=1.11
-arch>=8; python_version < "3.15"
-pytest>=8

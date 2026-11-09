@@ -13,8 +13,8 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from engine import strategy_returns
-from overfitting import sma_crossover_signal
+from .engine import strategy_returns
+from .overfitting import sma_crossover_signal
 
 
 @dataclass

@@ -1,9 +1,9 @@
 """Part 1: four signals on pure noise, and the test that exposes the leaks."""
 
-from data import make_prices
-from engine import leaky_positions, positions, sharpe, strategy_returns
-from lookahead import lookahead_test
-from signals import (
+from backtest_leakage_audit.data import make_prices
+from backtest_leakage_audit.engine import leaky_positions, positions, sharpe, strategy_returns
+from backtest_leakage_audit.lookahead import lookahead_test
+from backtest_leakage_audit.signals import (
     centered_ma_signal,
     confirmation_filter_signal,
     full_sample_zscore_signal,

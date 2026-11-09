@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.0.0
+
+### Changed (breaking)
+
+- The code is now an installable package: `pip install backtest-leakage-audit`.
+- Imports change from `from audit import audit_backtest` to `from backtest_leakage_audit import audit_backtest`.
+- The tutorial scripts moved to `examples/`, and `audit.py`'s demo became `examples/audit_demo.py`.
+- `requirements.txt` and `requirements-dev.txt` are replaced by `pyproject.toml`. Use `pip install -e ".[dev]"`.
+
+### Added
+
+- A `backtest-leakage-audit` command that audits a signal against a CSV of prices. Its exit code can gate CI.
+- Automatic publishing to PyPI from a GitHub release, using trusted publishing.
+
+### Fixed
+
+- `lookahead_test` no longer crashes when reporting a leak on prices without a date index.
+
+All golden outputs are unchanged, apart from `audit.txt` being renamed to `audit_demo.txt`.
+
 ## 1.1.0
 
 ### Fixed

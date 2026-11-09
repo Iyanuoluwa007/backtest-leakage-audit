@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from engine import TRADING_DAYS, sharpe, strategy_returns
+from .engine import TRADING_DAYS, sharpe, strategy_returns
 
 EULER_GAMMA = 0.5772156649015329
 

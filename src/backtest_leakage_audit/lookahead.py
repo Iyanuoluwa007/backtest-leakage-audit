@@ -94,6 +94,8 @@ def lookahead_test(
         if not same_value(original.iloc[row], altered.iloc[row]):
             mismatches += 1
             if len(examples) < 3:
-                examples.append((prices.index[row].date(), original.iloc[row], altered.iloc[row]))
+                label = prices.index[row]
+                label = label.date() if hasattr(label, "date") else label
+                examples.append((label, original.iloc[row], altered.iloc[row]))
 
     return LookaheadReport(getattr(fn, "__name__", "fn"), len(cut_points), mismatches, examples)

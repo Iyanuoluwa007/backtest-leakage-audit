@@ -7,9 +7,9 @@ Takes about a minute on a laptop.
 import numpy as np
 import pandas as pd
 
-from data import make_prices, make_trending_prices
-from engine import sharpe, strategy_returns
-from overfitting import (
+from backtest_leakage_audit.data import make_prices, make_trending_prices
+from backtest_leakage_audit.engine import sharpe, strategy_returns
+from backtest_leakage_audit.overfitting import (
     deflated_sharpe_ratio,
     grid_search,
     out_of_sample_returns,

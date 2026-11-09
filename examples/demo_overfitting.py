@@ -1,8 +1,8 @@
 """Part 2: a clean engine and clean signals can still produce a fake edge."""
 
-from data import make_prices
-from engine import sharpe, strategy_returns
-from overfitting import (
+from backtest_leakage_audit.data import make_prices
+from backtest_leakage_audit.engine import sharpe, strategy_returns
+from backtest_leakage_audit.overfitting import (
     annualise,
     deflated_sharpe_ratio,
     expected_max_sharpe,

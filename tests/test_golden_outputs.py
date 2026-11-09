@@ -14,13 +14,13 @@ import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
 
-FAST = ["demo_leaks", "demo_overfitting", "audit"]
+FAST = ["demo_leaks", "demo_overfitting", "audit_demo"]
 SLOW = ["monte_carlo"]
 
 
 def run_script(name: str) -> str:
     result = subprocess.run(
-        [sys.executable, f"{name}.py"], cwd=ROOT, capture_output=True, text=True, check=True
+        [sys.executable, f"examples/{name}.py"], cwd=ROOT, capture_output=True, text=True, check=True
     )
     return result.stdout
 

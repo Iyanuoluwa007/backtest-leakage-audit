@@ -1,7 +1,7 @@
 # backtest-leakage-audit
 
 [![CI](https://github.com/Iyanuoluwa007/backtest-leakage-audit/actions/workflows/ci.yml/badge.svg)](https://github.com/Iyanuoluwa007/backtest-leakage-audit/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/Iyanuoluwa007/backtest-leakage-audit/blob/main/LICENSE)
 
 Catch the two most common lies a trading backtest tells: **look-ahead bias** and **overfitting**.
 
@@ -22,20 +22,35 @@ On a driftless random walk the true Sharpe ratio of every strategy is zero, so a
 A control dataset with a real edge passes every check when it is the only idea tested, so the tools are not
 simply rejecting everything. Searching many ideas raises the bar: see [How much data you need](#how-much-data-you-need).
 
-## Quick start
+## Install
 
 ```bash
-git clone https://github.com/Iyanuoluwa007/backtest-leakage-audit.git
-cd backtest-leakage-audit
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-
-python demo_leaks.py         # leaky signals and the future-scramble test
-python demo_overfitting.py   # grid search, deflated Sharpe ratio, walk-forward
-python monte_carlo.py        # 100 noise histories plus a control (about 1 minute)
-python audit.py              # one plain-text verdict per strategy
-python -m pytest -q          # unit tests and golden-output tests
+pip install backtest-leakage-audit
 ```
+
+Python 3.11 or newer.
+
+## Quick start
+
+Save your signal as a function in a file, for example `my_signals.py`:
+
+```python
+import numpy as np
+
+
+def my_signal(prices):
+    return np.sign(prices["close"].pct_change())
+```
+
+Then audit it against a CSV with dates in the first column and a `close` column:
+
+```bash
+backtest-leakage-audit prices.csv --signal my_signals:my_signal --cost-bps 5 --all-rows
+```
+
+The exit code is 0 when every check passes, 1 when one fails and 2 for bad input, so it can gate a CI job.
+Add `--trials trials.csv` with one column of daily returns per strategy you tried, including this one, to
+run the bootstrap data-snooping test.
 
 Sample audit report:
 
@@ -47,14 +62,12 @@ Audit: best_crossover  (annualised Sharpe 0.84)
   Verdict: DO NOT TRUST THIS BACKTEST
 ```
 
-## Auditing your own strategy
+## Using it from Python
 
 `audit_backtest` takes a prices DataFrame with a `close` column, plus any other columns your signal reads.
 
 ```python
-from audit import audit_backtest
-from overfitting import parameter_grid
-from snooping import trial_return_matrix
+from backtest_leakage_audit import audit_backtest, parameter_grid, trial_return_matrix
 
 trials = trial_return_matrix(prices, parameter_grid(), cost_bps=5)  # or build your own: one column per idea
 
@@ -87,17 +100,31 @@ A failed check on a short history can mean "not enough evidence yet". It does no
 
 | File | Purpose |
 | --- | --- |
-| `data.py` | Synthetic prices: a driftless random walk and an AR(1) control with a real edge |
-| `engine.py` | A tiny vectorised backtest engine, plus the deliberately leaky version |
-| `signals.py` | One honest signal and three that leak the future |
-| `lookahead.py` | The future-scramble test for look-ahead bias |
-| `overfitting.py` | Probabilistic and deflated Sharpe ratios, grid search, walk-forward |
-| `snooping.py` | Hansen's SPA test across every strategy you tried |
-| `audit.py` | Runs every check and prints a verdict |
-| `demo_*.py`, `monte_carlo.py` | The scripts behind every number in the tutorial |
+| `src/backtest_leakage_audit/data.py` | Synthetic prices: a driftless random walk and an AR(1) control with a real edge |
+| `src/backtest_leakage_audit/engine.py` | A tiny vectorised backtest engine, plus the deliberately leaky version |
+| `src/backtest_leakage_audit/signals.py` | One honest signal and three that leak the future |
+| `src/backtest_leakage_audit/lookahead.py` | The future-scramble test for look-ahead bias |
+| `src/backtest_leakage_audit/overfitting.py` | Probabilistic and deflated Sharpe ratios, grid search, walk-forward |
+| `src/backtest_leakage_audit/snooping.py` | Hansen's SPA test across every strategy you tried |
+| `src/backtest_leakage_audit/audit.py` | Runs every check and prints a verdict |
+| `src/backtest_leakage_audit/cli.py` | The `backtest-leakage-audit` command |
+| `examples/` | The scripts behind every number in the tutorial |
 | `expected_output/` | Exact output of each script, checked by `tests/test_golden_outputs.py` |
 
 ## Reproducibility
+
+```bash
+git clone https://github.com/Iyanuoluwa007/backtest-leakage-audit.git
+cd backtest-leakage-audit
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+
+python examples/demo_leaks.py         # leaky signals and the future-scramble test
+python examples/demo_overfitting.py   # grid search, deflated Sharpe ratio, walk-forward
+python examples/monte_carlo.py        # 100 noise histories plus a control (about 1 minute)
+python examples/audit_demo.py         # one plain-text verdict per strategy
+python -m pytest -q                   # unit tests and golden-output tests
+```
 
 Every number in the tutorial is checked in CI. The golden-output tests run each script and compare its
 output byte for byte with `expected_output/`. Tested on Python 3.11 with pandas 2.x, and on Python 3.14 and
@@ -105,7 +132,8 @@ output byte for byte with `expected_output/`. Tested on Python 3.11 with pandas 
 check runs with `RUN_SLOW=1 python -m pytest -q`.
 
 The tutorial's code matches the [`v1.0.0`](https://github.com/Iyanuoluwa007/backtest-leakage-audit/tree/v1.0.0)
-tag. See the [changelog](CHANGELOG.md) for what has changed since.
+tag. See the [changelog](https://github.com/Iyanuoluwa007/backtest-leakage-audit/blob/main/CHANGELOG.md) for what
+has changed since.
 
 ## What these checks can't catch
 
@@ -125,4 +153,4 @@ White, H. (2000). A Reality Check for Data Snooping. *Econometrica*, 68(5), 1097
 
 ## License
 
-[Apache-2.0](LICENSE)
+[Apache-2.0](https://github.com/Iyanuoluwa007/backtest-leakage-audit/blob/main/LICENSE)

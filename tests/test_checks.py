@@ -3,11 +3,11 @@
 import numpy as np
 import pytest
 
-from data import make_prices, make_trending_prices
-from engine import leaky_positions, positions, strategy_returns
-from lookahead import lookahead_test
-from overfitting import expected_max_sharpe, probabilistic_sharpe_ratio
-from signals import (
+from backtest_leakage_audit.data import make_prices, make_trending_prices
+from backtest_leakage_audit.engine import leaky_positions, positions, strategy_returns
+from backtest_leakage_audit.lookahead import lookahead_test
+from backtest_leakage_audit.overfitting import expected_max_sharpe, probabilistic_sharpe_ratio
+from backtest_leakage_audit.signals import (
     centered_ma_signal,
     confirmation_filter_signal,
     full_sample_zscore_signal,

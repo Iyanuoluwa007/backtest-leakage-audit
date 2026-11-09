@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt "${{ matrix.pandas }}"
+          pip install ".[dev]" "${{ matrix.pandas }}"
       - name: Lint
         run: |
           ruff check .
@@ -38,3 +38,22 @@ jobs:
         env:
           RUN_SLOW: "1"
         run: python -m pytest -q
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - name: Build and check the distribution
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check --strict dist/*
+      - name: Install the wheel somewhere clean and run the command
+        run: |
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/clean/bin/backtest-leakage-audit --version
