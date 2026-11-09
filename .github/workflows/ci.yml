@@ -30,5 +30,7 @@ jobs:
         run: |
           ruff check .
           ruff format --check .
-      - name: Test (including golden outputs)
+      - name: Test (including all golden outputs, Monte Carlo too)
+        env:
+          RUN_SLOW: "1"
         run: python -m pytest -q
